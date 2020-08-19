@@ -5,8 +5,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get("/", (req, res, next) => {
-    res.send('Hello Work!')
-});
+const gatewaysRoutes = require("./api/routes/gateways");
+
+app.use("/gateways", gatewaysRoutes);
 
 app.listen(3000);
