@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const app = express();
+const router = express.Router();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -24,6 +25,9 @@ app.use(morgan("dev"));
 
 const gatewaysRoutes = require("./api/routes/gateways");
 const devicesRoutes = require("./api/routes/devices");
+
+
+app.use('/api', router);
 app.use("/gateways", gatewaysRoutes);
 app.use("/devices", devicesRoutes);
 

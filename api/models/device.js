@@ -4,6 +4,7 @@ const deviceSchema = mongoose.Schema({
   uid: {
     type: Number,
     require: true,
+    unique: true,
   },
 
   vendor: {
@@ -14,6 +15,7 @@ const deviceSchema = mongoose.Schema({
   created: {
     type: Date,
     require: true,
+    default: Date.now,
   },
 
   status: {

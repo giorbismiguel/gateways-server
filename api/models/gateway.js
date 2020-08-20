@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
-let Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
-const gatewaySchema = mongoose.Schema({
+const gatewaySchema = Schema({
   serial_number: {
     type: String,
     require: true,
+    unique: true,
   },
 
   name: {
@@ -25,4 +26,13 @@ const gatewaySchema = mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model("Gateway", gatewaySchema);
+Gateway = mongoose.model("Gateway", gatewaySchema);
+module.exports = Gateway;
+
+gatewaySchema.path("serial_number").validate(async (value) => {
+  const serialNumberCount = await mongoose.models.Gateway.findOne({
+    serial_number: value,
+  });
+
+  return !serialNumberCount;
+}, `This Serial Number is already registered`);

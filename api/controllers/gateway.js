@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+
+const { validationResult } = require("express-validator");
+
 const Gateway = require("../models/gateway");
 const Device = require("../models/device");
 
@@ -40,15 +42,26 @@ exports.all = (req, res) => {
 
 /**
  * Create a gateway
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 exports.create = (req, res) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+
+    return;
+  }
+
+  const { serial_number, name, ip, status } = req.body;
+
   const gateway = new Gateway({
-    serial_number: mongoose.Types.ObjectId(),
-    name: req.body.name,
-    ipv4: req.body.ip,
+    serial_number: serial_number,
+    name: name,
+    ipv4: ip,
+    status: status,
   });
 
   return gateway
@@ -72,9 +85,9 @@ exports.create = (req, res) => {
 
 /**
  * Get a single gateway
- * 
- * @param {*} req 
- * @param {*} res 
+ *
+ * @param {*} req
+ * @param {*} res
  */
 exports.get = (req, res) => {
   Gateway.findById(req.params.gatewayId).populate().exec();
