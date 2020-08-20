@@ -1,17 +1,8 @@
 const express = require("express");
-
 const router = express.Router();
 
-router.post("/", (req, res, next) => {
-  return res.status(200).json({
-    message: "The device was added",
-  });
-});
+const DevicesController = require("../controllers/device");
 
-router.delete("/:id", (req, res, next) => {
-  return res.status(200).json({
-    message: "The devices was deleted",
-  });
-});
+router.delete("/:deviceId", DevicesController.delete);
 
 module.exports = router;

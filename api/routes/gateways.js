@@ -1,17 +1,14 @@
 const express = require("express");
-
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  return res.status(200).json({
-    message: "List of Gateways and their devices",
-  });
-});
+const GatewaysController = require("../controllers/gateway");
 
-router.get("/:id", (req, res, next) => {
-  return res.status(200).json({
-    message: "Display details for a single gateway",
-  });
-});
+router.get("/", GatewaysController.all);
+
+router.post("/", GatewaysController.create);
+
+router.get("/:gatewayId", GatewaysController.get);
+
+router.post("/:gatewayId", GatewaysController.add_device);
 
 module.exports = router;
