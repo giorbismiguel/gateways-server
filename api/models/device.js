@@ -4,7 +4,6 @@ const deviceSchema = mongoose.Schema({
   uid: {
     type: Number,
     require: true,
-    unique: true,
   },
 
   vendor: {

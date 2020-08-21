@@ -1,5 +1,5 @@
 const { validationResult } = require("express-validator");
-
+const { isValidId } = require("../utils");
 const Gateway = require("../models/gateway");
 const Device = require("../models/device");
 
@@ -11,6 +11,7 @@ const Device = require("../models/device");
  */
 exports.all = (req, res) => {
   Gateway.find({})
+    .populate("devices")
     .exec()
     .then((gateways) => {
       res.status(201).json({
@@ -87,12 +88,20 @@ exports.create = (req, res) => {
  * @param {*} res
  */
 exports.get = (req, res) => {
-  Gateway.findById(req.params.gatewayId)
-    .populate()
+  const { gatewayId } = req.params;
+
+  if (!isValidId(gatewayId)) {
+    return res.status(404).json({
+      message: "Gateway not found",
+    });
+  }
+
+  return Gateway.findById(gatewayId)
+    .populate("devices")
     .exec()
     .then((gateway) => {
       if (!gateway) {
-        return res.status.length(404).json({
+        res.status(404).json({
           message: "Gateway not found",
         });
       }
@@ -104,7 +113,6 @@ exports.get = (req, res) => {
     });
 };
 
-// TODO: Do not allow more than 10 peripheral devices
 /**
  * Add device to gateways
  *
@@ -112,34 +120,57 @@ exports.get = (req, res) => {
  * @param {*} res
  */
 exports.add_device = (req, res) => {
-  const device = new Device({
-    uid: req.body.uid,
-    vendor: req.body.vendor,
-    created: req.body.created,
-    status: req.body.status,
-  });
+  const { gatewayId } = req.params;
 
-  return device
-    .save()
-    .then((dbDevice) => {
-      gateway.findOneAndUpdate(
-        { _id: req.params.id },
-        { $push: { devices: dbDevice._id } },
-        { new: true }
-      );
+  if (!isValidId(gatewayId)) {
+    return res.status(404).json({
+      message: "Gateway not found",
+    });
+  }
 
-      res.status(201).json({
-        message: `Device added to Gateway: ${$gateway.serial_number}`,
-        createdGateway: {
-          _id: dbDevice._id,
-          name: dbDevice.name,
-          ip: dbDevice.ipv4,
-        },
+  Gateway.findById(gatewayId)
+    .populate("devices")
+    .exec()
+    .then((dbGateway) => {
+      if (!dbGateway) {
+        return res.status(404).json({
+          message: "Gateway not found",
+        });
+      }
+
+      if (dbGateway.devices.length >= 10) {
+        return res.status(422).json({
+          message:
+            "No more that 10 peripheral devices are allowed for a gateway.",
+          dbGateway,
+        });
+      }
+
+      const device = new Device({
+        uid: ++dbGateway.devices.length,
+        vendor: req.body.vendor,
+        created: req.body.created,
+        status: req.body.status,
       });
-    })
-    .catch((err) => {
-      res.status(500).json({
-        err: err,
-      });
+
+      return device
+        .save()
+        .then((dbDevice) => {
+          Gateway.findByIdAndUpdate(
+            gatewayId,
+            { $push: { devices: dbDevice._id } },
+            { new: true, useFindAndModify: false }
+          ).then((dbGateway) => {
+            res.status(201).json({
+              message: `Device added to Gateway`,
+              dbGateway,
+            });
+          });
+        })
+        .catch((err) => {
+          res.status(500).json({
+            err: err,
+          });
+        });
     });
 };
