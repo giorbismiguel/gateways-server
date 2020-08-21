@@ -26,12 +26,12 @@ app.use(morgan("dev"));
 const gatewaysRoutes = require("./api/routes/gateways");
 const devicesRoutes = require("./api/routes/devices");
 
-
-app.use('/api', router);
+app.use("/api", router);
 app.use("/gateways", gatewaysRoutes);
 app.use("/devices", devicesRoutes);
 
 try {
+  mongoose.set("useCreateIndex", true);
   if (process.env.LOCAL_ENV) {
     mongoose.connect("mongodb://localhost:27017/gateways", {
       useNewUrlParser: true,

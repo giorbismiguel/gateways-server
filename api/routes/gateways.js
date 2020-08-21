@@ -14,7 +14,10 @@ router.post(
 
 router.get("/:gatewayId", GatewaysController.get);
 
-// TODO: Validate all fields when insert device
-router.post("/:gatewayId", GatewaysController.add_device);
+router.post(
+  "/:gatewayId",
+  GatewaysMiddleware.validate("add_device"),
+  GatewaysController.add_device
+);
 
 module.exports = router;

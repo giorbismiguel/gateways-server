@@ -4,7 +4,7 @@ exports.validate = (method) => {
   switch (method) {
     case "create": {
       return [
-        body("serial_number", "The Serial Number is required.").exists(),
+        body("serial_number", "The Serial Number is required.").exists().trim(),
         body("serial_number", "The Serial Number may not at least 2.").isLength(
           {
             min: 2,
@@ -27,6 +27,20 @@ exports.validate = (method) => {
 
         body("ip", "The IP is required.").exists(),
         body("ip", "The IP is not valid IPv4 address.").isIP(),
+      ];
+    }
+
+    case "add_device": {
+      return [
+        body("vendor", "The Vendor is required.").exists().trim(),
+        body("vendor", "The Vendor may not at least 2.").isLength({
+          min: 2,
+        }),
+        body("vendor", "The Vendor may not be greater than 200.").isLength({
+          max: 200,
+        }),
+        body("status", "The Status is required.").exists(),
+        body("status", "The Status is required.").isBoolean(),
       ];
     }
   }
