@@ -1,4 +1,3 @@
-
 const { validationResult } = require("express-validator");
 
 const Gateway = require("../models/gateway");
@@ -37,8 +36,6 @@ exports.all = (req, res) => {
       });
     });
 };
-
-// TODO: IPv4 must be validated and an error returned if it is invalid.
 
 /**
  * Create a gateway
@@ -90,19 +87,21 @@ exports.create = (req, res) => {
  * @param {*} res
  */
 exports.get = (req, res) => {
-  Gateway.findById(req.params.gatewayId).populate().exec();
-  then((gateway) => {
-    if (!gateway) {
-      return res.status.length(404).json({
-        message: "Gateway not found",
-      });
-    }
+  Gateway.findById(req.params.gatewayId)
+    .populate()
+    .exec()
+    .then((gateway) => {
+      if (!gateway) {
+        return res.status.length(404).json({
+          message: "Gateway not found",
+        });
+      }
 
-    res.status(200).json({
-      message: "Gateway was return",
-      gateway,
+      res.status(200).json({
+        message: "Gateway returned",
+        gateway,
+      });
     });
-  });
 };
 
 // TODO: Do not allow more than 10 peripheral devices
