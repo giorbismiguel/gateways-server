@@ -24,7 +24,7 @@ exports.delete = (req, res) => {
         });
       }
 
-      Device.findByIdAndRemove(deviceId)
+      Device.deleteOne({ _id: deviceId })
         .exec()
         .then(() => {
           res.status(200).json({

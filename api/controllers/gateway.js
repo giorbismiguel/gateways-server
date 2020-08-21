@@ -142,7 +142,6 @@ exports.add_device = (req, res) => {
         return res.status(422).json({
           message:
             "No more that 10 peripheral devices are allowed for a gateway.",
-          dbGateway,
         });
       }
 
@@ -163,7 +162,7 @@ exports.add_device = (req, res) => {
           ).then((dbGateway) => {
             res.status(201).json({
               message: `Device added to Gateway`,
-              dbGateway,
+              gateway: dbGateway,
             });
           });
         })

@@ -1,7 +1,6 @@
 {
   "env": {
     "LOCAL_ENV": true,
-    "MONGO_ATLAS_PW": "katherin2015",
-    "JWT_KEY": "secret"
+    "MONGODB_URL": "mongodb://localhost:27017/gateways"
   }
 }
