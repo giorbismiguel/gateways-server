@@ -60,7 +60,7 @@ test("Gateways list can be great than cero", async () => {
 
   expect(res1.statusCode).toEqual(201);
   expect(res1.body).toHaveProperty("count");
-  expect(res1.body).toHaveProperty("orders");
+  expect(res1.body).toHaveProperty("gateways");
   expect(1).toBe(res1.body.count);
 });
 

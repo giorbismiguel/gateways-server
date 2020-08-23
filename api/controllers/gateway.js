@@ -9,14 +9,14 @@ const Device = require("../models/device");
  * @param {*} req
  * @param {*} res
  */
-exports.all = (req, res) => {
+exports.all = (req, res) => {50
   Gateway.find({})
     .populate("devices")
     .exec()
     .then((gateways) => {
       res.status(201).json({
         count: gateways.length,
-        orders: gateways.map((gateway) => {
+        gateways: gateways.map((gateway) => {
           return {
             _id: gateway._id,
             serial_number: gateway.serial_number,

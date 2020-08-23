@@ -4,6 +4,13 @@ exports.validate = (method) => {
   switch (method) {
     case "create": {
       return [
+        body("name", "The Name is required.").exists(),
+        body("name", "The Name may not at least 2.").isLength({
+          min: 2,
+        }),
+        body("name", "The Name may not be greater than 50.").isLength({
+          max: 50,
+        }),        
         body("serial_number", "The Serial Number is required.").exists().trim(),
         body("serial_number", "The Serial Number may not at least 2.").isLength(
           {
@@ -14,14 +21,6 @@ exports.validate = (method) => {
           "serial_number",
           "The Serial Number may not be greater than 50."
         ).isLength({
-          max: 50,
-        }),
-
-        body("name", "The Name is required.").exists(),
-        body("name", "The Name may not at least 2.").isLength({
-          min: 2,
-        }),
-        body("name", "The Name may not be greater than 50.").isLength({
           max: 50,
         }),
 
