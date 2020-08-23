@@ -9,7 +9,8 @@ const Device = require("../models/device");
  * @param {*} req
  * @param {*} res
  */
-exports.all = (req, res) => {50
+exports.all = (req, res) => {
+  50;
   Gateway.find({})
     .populate("devices")
     .exec()
@@ -161,8 +162,8 @@ exports.add_device = (req, res) => {
             { new: true, useFindAndModify: false }
           ).then((dbGateway) => {
             res.status(201).json({
-              message: `Device added to Gateway`,
-              gateway: dbGateway,
+              message: `Device added to Gateway: ${dbGateway.name}`,
+              device: dbDevice,
             });
           });
         })

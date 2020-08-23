@@ -82,8 +82,8 @@ test("Should add a new device to Gateway", async () => {
         });
 
       expect(res.statusCode).toEqual(201);
-      expect("Device added to Gateway").toBe(res.body.message);
-      expect(res.body).toHaveProperty("gateway");
+      expect("Device added to Gateway: " + gatewayData.name).toBe(res.body.message);
+      expect(res.body).toHaveProperty("device");
     });
 });
 
