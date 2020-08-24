@@ -8,18 +8,17 @@
 
 ## Installation
 
-Clone repository.
+- Clone repository.
 ```
 $ git clone https://github.com/giorbismiguel/gateways-client.git
 ```
 
-Install dependencies via npm.
+- Install dependencies via npm.
 ```
 $ npm install
 ```
 
-Runs the app in the development mode.<br />
-The server will be ready in http://localhost:8080
+- Runs the app in the development mode, The server will be ready in http://localhost:8080
 ```
 $ npm start
 ```
