@@ -26,7 +26,7 @@ exports.all = (req, res) => {
             devices: gateway.devices,
             request: {
               type: "GET",
-              url: "http://localhost:3000/gateway/" + gateway._id,
+              url: "http://localhost:" + process.env.PORT + "/gateway/" + gateway._id,
             },
           };
         }),

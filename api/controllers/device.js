@@ -31,7 +31,7 @@ exports.delete = (req, res) => {
             message: "Device deleted",
             request: {
               type: "GET",
-              url: "http://localhost:3000/gateways",
+              url: "http://localhost:" + process.env.PORT + "/gateways",
             },
           });
         })
