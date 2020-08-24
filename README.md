@@ -19,7 +19,7 @@ $ npm install
 ```
 
 Runs the app in the development mode.<br />
-The server wil be ready in http://localhost:80.
+The server will be ready in http://localhost:8080
 ```
 $ npm start
 ```
