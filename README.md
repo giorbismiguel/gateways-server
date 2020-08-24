@@ -17,7 +17,6 @@ Install dependencies via npm.
 ```
 $ npm install
 ```
-```
 
 Runs the app in the development mode.<br />
 The server wil be ready in http://localhost:80.
@@ -27,7 +26,7 @@ $ npm start
 
 ## Testing
 
-- Unit Test
+- Run unit test
 ```
 npm run test
 ```
