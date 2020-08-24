@@ -24,7 +24,7 @@ $ git clone https://github.com/giorbismiguel/gateways-server.git
 $ npm install
 ```
 
-- Runs the app in the development mode, The server will be ready in http://localhost:8080
+- Runs the app and the server will be ready in: http://localhost:8080
 ```
 $ npm start
 ```
