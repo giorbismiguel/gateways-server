@@ -1,4 +1,4 @@
-# Test for Musala Soft | Gateways Server
+# Gateways Server
 
 ## Requirements
 
