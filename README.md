@@ -5,7 +5,7 @@
 - NodeJS >= 10.16.3 (`node -v`)
 
 ## Clients for these server.
-- You can use Postman Collection
+- You can use Postman Collection inside folder with the name: postman
 
 - You can use too, [Gateways Client](https://github.com/giorbismiguel/gateways-client.git)
 
