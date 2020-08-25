@@ -122,7 +122,8 @@ exports.get = (req, res) => {
  */
 exports.add_device = (req, res) => {
   const { gatewayId } = req.params;
-
+  const errors = validationResult(req);
+  
   if (!isValidId(gatewayId)) {
     return res.status(404).json({
       message: "Gateway not found",
