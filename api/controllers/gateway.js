@@ -128,6 +128,12 @@ exports.add_device = (req, res) => {
       message: "Gateway not found",
     });
   }
+  
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+
+    return;
+  }
 
   Gateway.findById(gatewayId)
     .populate("devices")
